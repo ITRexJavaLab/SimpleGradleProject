@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'com.itrex.java.lab'
+version '1.0-SNAPSHOT'
+
+ext {
+    javaMainClass = "com.itrex.java.lab.Main"
+}
+
+application {
+    mainClassName = javaMainClass;
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+/*
+add the ability to set args:
+    usage:    gradle run -PappArgs="['first argument message', 'second argument message']"
+
+    gradle 4.9+ exist command: gradle run --args="arg1 arg2"
+*/
+run {
+    logger.warn("Start run task")
+    ArrayList someList = new ArrayList<>()
+    someList.add("first list item")
+    someList.add("Second list item")
+    println someList
+
+    if (project.hasProperty("appArgs")) {
+        args Eval.me(project.appArgs)
+    } else {
+        args = ["default 1", "default 2"]
+    }
+}
